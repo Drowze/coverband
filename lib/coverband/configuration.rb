@@ -222,8 +222,8 @@ module Coverband
     def all_root_paths
       return @all_root_paths if @all_root_paths
 
-      @all_root_paths = Coverband.configuration.root_paths.dup
-      @all_root_paths << "#{Coverband.configuration.current_root}/"
+      @all_root_paths = ["#{Coverband.configuration.current_root}/"]
+      @all_root_paths += Coverband.configuration.root_paths
       @all_root_paths
     end
 
