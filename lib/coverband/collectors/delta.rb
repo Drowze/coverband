@@ -40,6 +40,7 @@ module Coverband
       def self.reset
         @@previous_coverage = {}
         @@project_directory = File.expand_path(Coverband.configuration.root)
+        @@project_directories = Coverband.configuration.all_root_paths.map { |path| File.expand_path(path) }
         @@ignore_patterns = Coverband.configuration.ignore
       end
 
@@ -55,7 +56,7 @@ module Coverband
           # would slow down the performance.
           ###
           next unless @@ignore_patterns.none? { |pattern| file.match(pattern) } &&
-            file.start_with?(@@project_directory)
+            @@project_directories.any? { |path| file.start_with?(path) }
 
           # This handles Coverage branch support, setup by default in
           # simplecov 0.18.x
